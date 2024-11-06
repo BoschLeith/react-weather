@@ -1,6 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { getDailyWeather } from '@/api/weather';
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
+import { WeatherIcon } from '@/components/WeatherIcon';
 import type { Place } from '@/types/Place';
 
 interface MapProps {
@@ -16,22 +24,51 @@ const DailyWeather = ({ place }: MapProps) => {
   });
 
   return (
-    <div>
-      <h2>Daily Weather</h2>
-      {place?.name}
-      {isLoading && <div>Loading...</div>}
+    <div className="space-y-4">
+      <div className="text-center space-y-4">
+        <h2 className="text-xl font-semibold">7-Day Weather Forecast</h2>
+        <div>{place?.name}</div>
+      </div>
+      {isLoading && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {Array.from({ length: 7 }).map((_, index) => (
+            <Skeleton key={index} className="h-[230px] w-full" />
+          ))}
+        </div>
+      )}
       {error && <div>Error: {error.message}</div>}
       {data && (
-        <ul>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {data.daily.time.map((date, index) => (
-            <li key={date}>
-              {date}: Max Temp: {data.daily.temperature_2m_max[index]}
-              {data.daily_units.temperature_2m_max}, Min Temp:{' '}
-              {data.daily.temperature_2m_min[index]}
-              {data.daily_units.temperature_2m_min}
-            </li>
+            <Card key={date} className="shadow-lg p-4">
+              <CardHeader>
+                <h3 className="text-lg font-bold text-center">
+                  {new Date(date).toLocaleDateString('en-US', {
+                    weekday: 'short',
+                  })}
+                </h3>
+              </CardHeader>
+              <CardContent>
+                <WeatherIcon code={data.daily.weather_code[index]} />
+              </CardContent>
+              <CardFooter className="flex-row justify-center gap-4">
+                <div className="font-semibold">
+                  {data.daily.temperature_2m_max[index]}{' '}
+                  {data.daily_units.temperature_2m_max}
+                </div>
+                <div className="text-gray-500">
+                  {data.daily.temperature_2m_min[index]}{' '}
+                  {data.daily_units.temperature_2m_min}
+                </div>
+              </CardFooter>
+            </Card>
           ))}
-        </ul>
+        </div>
+      )}
+      {!data && !isLoading && (
+        <div className="text-center text-gray-500">
+          <p className="text-lg">Please enter a location to see the forecast</p>
+        </div>
       )}
     </div>
   );

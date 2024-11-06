@@ -5,6 +5,7 @@ interface DailyWeatherResponse {
     time: string[];
     temperature_2m_max: number[];
     temperature_2m_min: number[];
+    weather_code: number[];
   };
   daily_units: {
     temperature_2m_max: string;
@@ -20,7 +21,7 @@ export const getDailyWeather = async (
   }
 
   const response = await fetch(
-    `https://api.open-meteo.com/v1/forecast?latitude=${place.latitude}&longitude=${place.longitude}&daily=temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timezone=America%2FChicago`,
+    `https://api.open-meteo.com/v1/forecast?latitude=${place.latitude}&longitude=${place.longitude}&daily=weather_code,temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timezone=America%2FChicago`,
   );
 
   if (!response.ok) {
