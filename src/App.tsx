@@ -1,7 +1,8 @@
 import { useState } from 'react';
 
 import DailyWeather from '@/components/DailyWeather';
-import LocationSearch, { Place } from '@/components/LocationSearch';
+import LocationSearch from '@/components/LocationSearch';
+import type { Place } from '@/types/Place';
 
 function App() {
   const [place, setPlace] = useState<Place | null>(null);

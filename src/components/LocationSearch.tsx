@@ -1,56 +1,24 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import { FormEvent, useState } from 'react';
 
-interface SearchResponse {
-  features: {
-    geometry: { coordinates: number[] };
-    properties: {
-      place_id: number;
-      display_name: string;
-    };
-  }[];
-}
-
-export interface Place {
-  id: number;
-  name: string;
-  longitude: number;
-  latitude: number;
-}
+import { getLocations } from '@/api/location';
+import type { Place } from '@/types/Place';
 
 interface LocationSearchProps {
   onClick: (place: Place) => void;
 }
 
-const getLocation = async (searchTerm: string) => {
-  const response = await fetch(
-    `https://nominatim.openstreetmap.org/search?q=${searchTerm}&format=geojson&addressdetails=1&layer=address&limit=5`,
-  );
-  const data: SearchResponse = await response.json();
-
-  const places: Place[] = data.features.map((feature) => {
-    return {
-      id: feature.properties.place_id,
-      name: feature.properties.display_name,
-      longitude: feature.geometry.coordinates[0],
-      latitude: feature.geometry.coordinates[1],
-    };
-  });
-
-  return places;
-};
-
 const LocationSearch = ({ onClick }: LocationSearchProps) => {
-  const [searchTerm, setSearchTerm] = React.useState('');
+  const [searchTerm, setSearchTerm] = useState('');
 
   const { data, error, isLoading } = useQuery({
     queryKey: ['places', searchTerm],
-    queryFn: () => getLocation(searchTerm),
+    queryFn: () => getLocations(searchTerm),
     // The query will not execute until the searchTerm exists
     enabled: !!searchTerm,
   });
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
 

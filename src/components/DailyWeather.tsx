@@ -1,32 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { Place } from '@/components/LocationSearch';
-
-interface DailyWeatherResponse {
-  daily: {
-    time: string[];
-    temperature_2m_max: number[];
-    temperature_2m_min: number[];
-  };
-  daily_units: {
-    temperature_2m_max: string;
-    temperature_2m_min: string;
-  };
-}
+import { getDailyWeather } from '@/api/weather';
+import type { Place } from '@/types/Place';
 
 interface MapProps {
   place: Place | null;
 }
 
-export const getDailyWeather = async (place: Place | null) => {
-  const response = await fetch(
-    `https://api.open-meteo.com/v1/forecast?latitude=${place?.latitude}&longitude=${place?.longitude}&daily=temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timezone=America%2FChicago`,
-  );
-  return await response.json();
-};
-
 const DailyWeather = ({ place }: MapProps) => {
-  const { data, error, isLoading } = useQuery<DailyWeatherResponse>({
+  const { data, error, isLoading } = useQuery({
     queryKey: ['weather', place],
     queryFn: () => getDailyWeather(place),
     // The query will not execute until the place exists
