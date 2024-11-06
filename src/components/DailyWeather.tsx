@@ -30,7 +30,7 @@ const DailyWeather = ({ place }: MapProps) => {
         <div>{place?.name}</div>
       </div>
       {isLoading && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-4">
           {Array.from({ length: 7 }).map((_, index) => (
             <Skeleton key={index} className="h-[230px] w-full" />
           ))}
@@ -38,7 +38,7 @@ const DailyWeather = ({ place }: MapProps) => {
       )}
       {error && <div>Error: {error.message}</div>}
       {data && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-4">
           {data.daily.time.map((date, index) => (
             <Card key={date} className="shadow-lg p-4">
               <CardHeader>

@@ -8,8 +8,7 @@ function App() {
   const [place, setPlace] = useState<Place | null>(null);
 
   return (
-    <div>
-      <h1>Weather App</h1>
+    <div className="container space-y-4 py-4">
       <LocationSearch onClick={(place) => setPlace(place)} />
       <DailyWeather place={place} />
     </div>
