@@ -1,50 +1,75 @@
-# React + TypeScript + Vite
+# React Weather
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React Weather is a simple React application that provides users with real-time weather information for any location. The application uses [OpenStreetMap](https://www.openstreetmap.org/) for geocoding the users location search and fetches data from [Open Meteo](https://open-meteo.com/) and displays current weather conditions, forecasts, and other relevant details.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Search for weather by city or location
+- Display current weather conditions
+- View a 5-day weather forecast
+- Responsive design for mobile and desktop
+- User-friendly interface
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+To install React Weather, follow these steps:
 
-- Configure the top-level `parserOptions` property like this:
+#### Option 1: Local Installation
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
-```
+1. **Ensure you have Node.js and npm installed** on your machine. You can download them from [nodejs.org](https://nodejs.org/).
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+2. **Clone the repository**:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react';
+   ```bash
+   git clone https://github.com/BoschLeith/react-weather.git
+   ```
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-});
-```
+3. **Navigate to the project directory**:
+
+   ```bash
+   cd react-weather
+   ```
+
+4. **Install the dependencies**:
+
+   ```bash
+   npm install
+   ```
+
+5. **Start the application**:
+
+   ```bash
+   npm run dev
+   ```
+
+6. **Open your browser** and go to `http://localhost:5173` (or the port specified in your Vite configuration) to view the app.
+
+#### Option 2: Docker Installation
+
+1. **Ensure you have Docker installed** on your machine. You can download it from [docker.com](https://www.docker.com/).
+
+2. **Clone the repository** (if you haven't already):
+
+   ```bash
+   git clone https://github.com/BoschLeith/react-weather.git
+   ```
+
+3. **Navigate to the project directory**:
+
+   ```bash
+   cd react-weather
+   ```
+
+4. **Build the Docker image**:
+
+   ```bash
+   docker build -t react-weather .
+   ```
+
+5. **Run the Docker container**:
+
+   ```bash
+   docker run -p 5173:5173 react-weather
+   ```
+
+6. **Open your browser** and go to `http://localhost:5173` to view the app.
